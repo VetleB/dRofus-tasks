@@ -2,9 +2,14 @@
 
 while (!quit) 
 {
+    var vendingMachine = new VendingMachine();
+
     var userInput = Console.ReadLine()?.ToLower();
-    if (userInput == "q") 
+    
+    switch (userInput)
     {
-        quit = true;
+        case "q":
+            quit = true;
+            break;
     }
 }
