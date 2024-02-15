@@ -1,3 +1,6 @@
+using ContactBook;
+using Microsoft.AspNetCore.Http.HttpResults;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -16,21 +19,20 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var contacts = new List<Contact>
-{
-    new Contact { Id = 1, Name = "John Smith", Address = "Main Street 1" }
-};
+var contacts = new ContactDatabase();
 
-app.MapGet("/", () =>
+app.MapGet("/contacts", () =>
 {
-    return contacts;
+    return Results.Ok(contacts.GetContacts());
+});
+
+app.MapGet("/contacts/{id}", (int id) =>
+{
+    var contact = contacts.GetContact(id);
+    if (contact == null)
+        return Results.NotFound("Contact not found");
+
+    return Results.Ok(contact);
 });
 
 app.Run();
-
-class Contact
-{
-    public int Id { get; set; }
-    public required string Name { get; set; }
-    public required string Address { get; set; }
-}
