@@ -1,0 +1,6 @@
+@ContactBook_HostAddress = http://localhost:5157
+
+GET {{ContactBook_HostAddress}}/contacts/
+Accept: application/json
+
+###
