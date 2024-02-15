@@ -2,6 +2,10 @@ public class VendingMachine
 {
     private int money;
     private Dictionary<string, Product> stock = new Dictionary<string, Product>();
+    private readonly Dictionary<string, string> commands = new Dictionary<string, string>
+    {
+        { "addFunds", "insert" },
+    };
 
     public VendingMachine(List<Product> products) 
     {
@@ -9,12 +13,10 @@ public class VendingMachine
         this.StockProducts(products);
     }
 
-    private void StockProducts(List<Product> products)
+
+    public void AddFunds(int fundsToAdd) 
     {
-        foreach (var product in products) 
-        {
-            this.stock.Add(product.Name, product);
-        }
+        this.money += fundsToAdd;
     }
 
     public string ListProducts()
@@ -27,5 +29,23 @@ public class VendingMachine
         }
 
         return outString.Substring(0, outString.Length - 2);
+    }
+
+    public Dictionary<string, string> GetCommands() 
+    {
+        return this.commands;
+    }
+
+    public int GetFunds()
+    {
+        return this.money;
+    }
+
+    private void StockProducts(List<Product> products)
+    {
+        foreach (var product in products) 
+        {
+            this.stock.Add(product.Name, product);
+        }
     }
 }
