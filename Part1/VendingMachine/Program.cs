@@ -6,8 +6,9 @@ var commands = vendingMachine.GetCommands();
 
 while (!quit) 
 {
+    Console.Write("> ");
+    
     var userInput = Console.ReadLine()?.ToLower();
-
     switch (userInput)
     {
         case string s when s.StartsWith(commands["listInventory"]):
