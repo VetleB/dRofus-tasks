@@ -6,7 +6,8 @@ public class VendingMachine
     {
         { "listInventory", "list" },
         { "addFunds", "insert" },
-        { "recallFunds", "recall" }
+        { "recallFunds", "recall" },
+        { "orderProduct", "order" }
     };
 
     public VendingMachine(List<Product> products) 
@@ -15,6 +16,18 @@ public class VendingMachine
         this.StockProducts(products);
     }
 
+
+    public string ListProducts()
+    {
+        var outString = "";
+
+        foreach (var product in stock.Values)
+        {
+            outString += $"{product.Name} - {product.Price}, ";
+        }
+
+        return outString.Substring(0, outString.Length - 2);
+    }
 
     public void AddFunds(int fundsToAdd) 
     {
@@ -28,16 +41,27 @@ public class VendingMachine
         return fundsToReturn;
     }
 
-    public string ListProducts()
+    public bool CheckIfProductInStock(string name) 
     {
-        var outString = "";
+        return this.stock.ContainsKey(name);
+    }
 
-        foreach (var product in stock.Values)
-        {
-            outString += $"{product.Name} - {product.Price}, ";
-        }
+    public int MissingFunds(string name) 
+    {
+        var product = this.stock[name];
+        return product.Price - this.money;
+    }
 
-        return outString.Substring(0, outString.Length - 2);
+    public (string, int) OrderProduct(string name) 
+    {
+        var product = this.stock[name];
+
+        if (this.money < product.Price)
+            throw new Exception("Not enough money");
+        
+        var fundsReturned = this.money - product.Price;
+        this.money = 0;
+        return (product.Name, fundsReturned);
     }
 
     public Dictionary<string, string> GetCommands() 
@@ -54,7 +78,7 @@ public class VendingMachine
     {
         foreach (var product in products) 
         {
-            this.stock.Add(product.Name, product);
+            this.stock.Add(product.Name.ToLower(), product);
         }
     }
 }
