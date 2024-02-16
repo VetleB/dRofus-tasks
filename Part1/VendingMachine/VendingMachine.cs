@@ -17,7 +17,7 @@ public class VendingMachine
     }
 
 
-    public string ListProducts()
+    public string GetListOfProducts()
     {
         var outString = "";
 
