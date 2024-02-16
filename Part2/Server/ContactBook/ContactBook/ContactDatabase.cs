@@ -12,13 +12,16 @@
             Random random = new Random();
             foreach (int id in Enumerable.Range(1, 50))
             {
-                this.contacts.Add(id, new Contact
+                var contact = new Contact
                 {
                     Id = id,
                     FirstName = FirstNames[random.Next(0, FirstNames.Count)],
                     LastName = LastNames[random.Next(0, LastNames.Count)],
-                    MiddleName = MiddleNames[random.Next(0, MiddleNames.Count)],
-                });
+                    MiddleName = MiddleNames[random.Next(0, MiddleNames.Count)]
+                };
+                contact.Email = $"{contact.FirstName}.{contact.MiddleName[0]}.{contact.LastName}@email.com".ToLower();
+
+                this.contacts.Add(id, contact);
             }
         }
 
