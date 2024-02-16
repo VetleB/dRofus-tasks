@@ -1,1 +1,8 @@
-<h2>{{ contact.firstName }} {{contact.middleName}} {{contact.lastName}}</h2>
+<button class="back-button" (click)="goToList()">
+    <p><i class="arrow left vertical-center"></i></p>
+</button>
+
+<div class="contact-detail">
+    <h2>{{ contact?.firstName }} {{contact?.middleName}} {{contact?.lastName}}</h2>
+    <p>{{contact?.email}}</p>
+</div>

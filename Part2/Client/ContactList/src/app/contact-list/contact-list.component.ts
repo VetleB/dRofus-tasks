@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ContactService } from '../service/contact.service';
 import { Contact } from '../models/models';
 import { NgFor } from '@angular/common';
 import { Router } from '@angular/router';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { contacts } from '../Data/data';
 
 @Component({
   selector: 'app-contact-list',
@@ -14,20 +15,26 @@ import { MatPaginatorModule } from '@angular/material/paginator';
   styleUrl: './contact-list.component.css'
 })
 export class ContactListComponent {
+  @ViewChild(MatPaginator) private paginator: MatPaginator;
   contacts: Contact[] = [];
+  dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
   displayedColumns = ["id", "firstName", "middleName", "lastName"];
 
   constructor(private contactService: ContactService, private router: Router) { }
   
   ngOnInit() {
-    this.contacts = [{ id: 1, firstName: 'John', lastName: 'Smith', middleName: 'Middle'},
-                     { id: 2, firstName: 'Jane', lastName: 'Doe', middleName: 'Middle'}]
+    this.contacts = contacts;
+    this.dataSource.data = contacts;
     // this.contactService.getContacts().subscribe({ 
     //   next: (contacts) => {
     //     this.contacts = contacts;
-    //     console.log(contacts);
     //   }
     // });
+  }
+
+  ngAfterViewInit() {
+    this.dataSource = new MatTableDataSource(this.contacts);
+    this.dataSource.paginator = this.paginator;
   }
 
   navigateTo(id: number) {

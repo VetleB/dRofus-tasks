@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Contact } from '../models/models';
 import { ContactService } from '../service/contact.service';
-import { ActivatedRoute, Route } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
+import { contacts } from '../Data/data';
 
 @Component({
   selector: 'app-contact-detail',
@@ -11,20 +12,22 @@ import { ActivatedRoute, Route } from '@angular/router';
   styleUrl: './contact-detail.component.css'
 })
 export class ContactDetailComponent {
-  contact: Contact;
-  id: string;
+  contact: Contact | undefined;
+  id: number;
 
-  constructor(private contactService: ContactService, public route: ActivatedRoute) { }
+  constructor(private contactService: ContactService, public route: ActivatedRoute, private router: Router) { }
   
   ngOnInit() {
-    this.contact = { id: 1, firstName: 'John', lastName: 'Smith', middleName: 'Middle'}
-    this.id = this.route.snapshot.params['id'];
-    console.log(this.id)
+    this.id = parseInt(this.route.snapshot.params['id']);
+    this.contact = contacts.find(c => c.id == this.id);
     // this.contactService.getContacts().subscribe({ 
-    //   next: (contacts) => {
-    //     this.contacts = contacts;
-    //     console.log(contacts);
+    //   next: (contact) => {
+    //     this.contact = contact;
     //   }
     // });
+  }
+
+  public goToList() {
+    this.router.navigate(['contact-list']);
   }
 }
