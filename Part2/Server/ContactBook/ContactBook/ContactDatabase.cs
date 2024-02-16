@@ -2,9 +2,9 @@
 {
     public class ContactDatabase
     {
-        private static List<string> FirstNames = ["John", "Jane", "Robert", "Sarah", "Alice", "Trudy", "Charlie", "Chet"];
-        private static List<string> LastNames = ["Smith", "Doe", "Carpenter", "Buxley", "Twist", "Dawson", "Biden", "Bigsley"];
-        private static List<string> MiddleNames = ["Taylor", "Jordan", "Morgan", "Riley", "Avery", "Casy", "Quinn", "Cameron"];
+        private static readonly List<string> FirstNames = ["John", "Jane", "Robert", "Sarah", "Alice", "Trudy", "Charlie", "Chet"];
+        private static readonly List<string> LastNames = ["Smith", "Doe", "Carpenter", "Buxley", "Twist", "Dawson", "Biden", "Bigsley"];
+        private static readonly List<string> MiddleNames = ["Taylor", "Jordan", "Morgan", "Riley", "Avery", "Casy", "Quinn", "Cameron"];
         private readonly Dictionary<int, Contact> contacts = new Dictionary<int, Contact>();
         
         public ContactDatabase()
