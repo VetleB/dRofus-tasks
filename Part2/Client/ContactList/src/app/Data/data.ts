@@ -1,5 +1,6 @@
 import { Contact } from "../models/models";
 
+// This is in lieu of fetching data from API, as I couldn't get past SOP/CORS
 export const contacts: Contact[] = [
     {
       "id": 1,

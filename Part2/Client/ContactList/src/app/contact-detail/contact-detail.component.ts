@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Contact } from '../models/models';
 import { ContactService } from '../service/contact.service';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { contacts } from '../Data/data';
 
 @Component({
@@ -20,7 +20,7 @@ export class ContactDetailComponent {
   ngOnInit() {
     this.id = parseInt(this.route.snapshot.params['id']);
     this.contact = contacts.find(c => c.id == this.id);
-    // this.contactService.getContacts().subscribe({ 
+    // this.contactService.getContacts().subscribe({ // Supposed to fetch data, but CORS
     //   next: (contact) => {
     //     this.contact = contact;
     //   }

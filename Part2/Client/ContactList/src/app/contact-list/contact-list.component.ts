@@ -15,17 +15,16 @@ import { contacts } from '../Data/data';
   styleUrl: './contact-list.component.css'
 })
 export class ContactListComponent {
-  @ViewChild(MatPaginator) private paginator: MatPaginator;
-  contacts: Contact[] = [];
-  dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  dataSource: MatTableDataSource<Contact> = new MatTableDataSource<Contact>(contacts);
   displayedColumns = ["id", "firstName", "middleName", "lastName"];
 
   constructor(private contactService: ContactService, private router: Router) { }
   
   ngOnInit() {
-    this.contacts = contacts;
     this.dataSource.data = contacts;
-    // this.contactService.getContacts().subscribe({ 
+    this.dataSource.paginator = this.paginator;
+    // this.contactService.getContacts().subscribe({  // Supposed to fetch data, but CORS
     //   next: (contacts) => {
     //     this.contacts = contacts;
     //   }
@@ -33,7 +32,6 @@ export class ContactListComponent {
   }
 
   ngAfterViewInit() {
-    this.dataSource = new MatTableDataSource(this.contacts);
     this.dataSource.paginator = this.paginator;
   }
 
