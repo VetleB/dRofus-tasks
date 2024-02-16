@@ -2,7 +2,6 @@
 
 var products = VendingProducts.products;
 var vendingMachine = new VendingMachine(products);
-var commands = vendingMachine.GetCommands();
 
 while (!quit) 
 {
@@ -11,22 +10,22 @@ while (!quit)
     var userInput = Console.ReadLine()?.ToLower();
     switch (userInput)
     {
-        case string s when s.StartsWith(commands["listInventory"]):
+        case "list":
             Console.WriteLine($"< {vendingMachine.GetListOfProducts()}");
             break;
 
-        case string s when s.StartsWith(commands["addFunds"]):
-            _ = int.TryParse(s.AsSpan(commands["addFunds"].Length + 1), out int funds);
-            vendingMachine.AddFunds(funds);
+        case string s when s.StartsWith("insert"):
+            _ = int.TryParse(s.AsSpan("insert".Length + 1), out int fundsToBeAdded);
+            vendingMachine.AddFunds(fundsToBeAdded);
             Console.WriteLine($"< Current credit is {vendingMachine.GetFunds()}");
             break;
             
-        case string s when s.StartsWith(commands["recallFunds"]):
+        case string s when s.StartsWith("recall"):
             Console.WriteLine($"< Giving out {vendingMachine.RecallFunds()}");
             break;
 
-        case string s when s.StartsWith(commands["orderProduct"]):
-            var productName = s.AsSpan(commands["orderProduct"].Length + 1).ToString().ToLower();
+        case string s when s.StartsWith("order"):
+            var productName = s.AsSpan("order".Length + 1).ToString().ToLower();
 
             if (!vendingMachine.CheckIfProductInStock(productName))
                 break;

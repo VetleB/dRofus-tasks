@@ -2,13 +2,6 @@ public class VendingMachine
 {
     private int money;
     private Dictionary<string, Product> stock = new Dictionary<string, Product>();
-    private readonly Dictionary<string, string> commands = new Dictionary<string, string>
-    {
-        { "listInventory", "list" },
-        { "addFunds", "insert" },
-        { "recallFunds", "recall" },
-        { "orderProduct", "order" }
-    };
 
     public VendingMachine(List<Product> products) 
     {
@@ -62,11 +55,6 @@ public class VendingMachine
         var fundsReturned = this.money - product.Price;
         this.money = 0;
         return (product.Name, fundsReturned);
-    }
-
-    public Dictionary<string, string> GetCommands() 
-    {
-        return this.commands;
     }
 
     public int GetFunds()
